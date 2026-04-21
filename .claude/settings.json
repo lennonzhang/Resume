@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git status:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run build:*)",
+      "Bash(pnpm run dev:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm exec:*)",
+      "Bash(pnpm --version:*)",
+      "Bash(where pnpm:*)",
+      "Bash(where:*)",
+      "Bash(cd:*)",
+      "Bash(python:*)",
+      "Bash(powershell:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(.venv/Scripts/pip.exe show:*)",
+      "Bash(.venv/Scripts/python.exe -m pip show pytest)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_auto_pm_api -v)",
+      "Bash(git:*)",
+      "PowerShell(python -m unittest tests.cli.test_app tests.cli.test_chat_handler tests.cli.test_commands tests.cli.test_service tests.cli.test_session_store -v)",
+      "Read(//d//**)",
+      "Bash(ls -la /d)",
+      "Read(//d/Code/**)",
+      "PowerShell(python -V)",
+      "PowerShell(py *)"
+    ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
+  }
+}
