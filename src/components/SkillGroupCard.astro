@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  items: string[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<article class="skill-card rounded-[28px] p-6">
+  <p class="mini-label mb-3">Capability</p>
+  <h3 class="feature-title mb-5 text-3xl tracking-[-0.06em] text-[var(--text)]">{title}</h3>
+  <div class="flex flex-wrap gap-2.5">
+    {items.map((item) => <span class="tag rounded-full px-3 py-2 text-sm text-[var(--text-secondary)]">{item}</span>)}
+  </div>
+</article>

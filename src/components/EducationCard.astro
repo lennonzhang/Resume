@@ -1,0 +1,26 @@
+---
+interface Props {
+  school: string;
+  degree: string;
+  period: string;
+  location: string;
+  detail: string;
+}
+
+const { school, degree, period, location, detail } = Astro.props;
+---
+
+<article class="edu-card rounded-[30px] p-6 sm:p-7">
+  <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <p class="mini-label mb-2">Education</p>
+      <h3 class="feature-title text-3xl tracking-[-0.06em] text-[var(--text)]">{school}</h3>
+      <p class="mt-2 text-sm text-[var(--text-secondary)]">{degree}</p>
+    </div>
+    <div class="sm:text-right">
+      <p class="mini-label text-[var(--accent-strong)]">{period}</p>
+      <p class="mt-2 text-sm text-[var(--text-secondary)]">{location}</p>
+    </div>
+  </div>
+  <p class="body-copy text-sm">{detail}</p>
+</article>

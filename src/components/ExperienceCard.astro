@@ -1,0 +1,32 @@
+---
+interface Props {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  summary: string;
+  bullets: string[];
+}
+
+const { company, role, period, location, summary, bullets } = Astro.props;
+---
+
+<article class="experience-card timeline-card rounded-[30px] p-6 sm:p-8">
+  <div class="timeline-rail space-y-2">
+    <span class="timeline-dot"></span>
+    <p class="mini-label">{period}</p>
+    <p class="text-sm text-[var(--text-secondary)]">{location}</p>
+  </div>
+  <div>
+    <div class="mb-4 flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
+      <div>
+        <p class="mini-label mb-2">{company}</p>
+        <h3 class="feature-title text-3xl tracking-[-0.06em] text-[var(--text)]">{role}</h3>
+      </div>
+    </div>
+    <p class="body-copy mb-5 text-sm">{summary}</p>
+    <ul class="space-y-3 pl-5 text-sm leading-7 text-[var(--text)] marker:text-[var(--accent)]">
+      {bullets.map((bullet) => <li>{bullet}</li>)}
+    </ul>
+  </div>
+</article>

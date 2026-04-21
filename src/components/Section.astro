@@ -1,0 +1,25 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  id?: string;
+  indexLabel?: string;
+}
+
+const { eyebrow, title, subtitle, id, indexLabel } = Astro.props;
+---
+
+<section id={id} class="section-shell rounded-[36px] px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+  <div class="mb-8 grid gap-5 lg:grid-cols-[92px_minmax(0,1fr)] lg:items-end">
+    <div class="section-index">{indexLabel ?? '00'}</div>
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        {eyebrow && <p class="section-kicker">{eyebrow}</p>}
+        <h2 class="section-title text-3xl font-semibold tracking-[-0.06em] text-[var(--text)] sm:text-4xl">{title}</h2>
+      </div>
+      {subtitle && <p class="max-w-2xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base">{subtitle}</p>}
+    </div>
+  </div>
+  <slot />
+</section>
