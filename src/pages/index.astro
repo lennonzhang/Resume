@@ -14,9 +14,26 @@ const locale: Locale = rawLocale === 'en' ? 'en' : defaultLocale;
 const pdfMode = rawMode === 'pdf';
 const copy = labels[locale];
 const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
-const switchHref = `/?lang=${alternateLocale}${pdfMode ? '&mode=pdf' : ''}`;
-const pdfHref = `/?lang=${locale}&mode=pdf`;
-const webHref = `/?lang=${locale}`;
+const currentPath = Astro.url.pathname;
+
+const buildHref = (nextLocale: Locale, nextPdfMode: boolean) => {
+  const params = new URLSearchParams();
+
+  if (nextLocale !== defaultLocale) {
+    params.set('lang', nextLocale);
+  }
+
+  if (nextPdfMode) {
+    params.set('mode', 'pdf');
+  }
+
+  const query = params.toString();
+  return query ? `${currentPath}?${query}` : currentPath;
+};
+
+const switchHref = buildHref(alternateLocale, pdfMode);
+const pdfHref = buildHref(locale, true);
+const webHref = buildHref(locale, false);
 ---
 
 <BaseLayout locale={locale} pdfMode={pdfMode} switchHref={switchHref} alternateLocale={alternateLocale}>
