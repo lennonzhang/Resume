@@ -1,0 +1,13 @@
+---
+import ResumePage from '../../../components/ResumePage.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<ResumePage
+  locale="en"
+  pdfMode
+  switchHref={`${baseUrl}pdf/`}
+  pdfHref={`${baseUrl}en/pdf/`}
+  webHref={`${baseUrl}en/`}
+/>

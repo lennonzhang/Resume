@@ -376,6 +376,20 @@ body.pdf-mode .section-kicker {
   color: var(--text-secondary);
 }
 
+html.pdf-mode .footer-shell,
+body.pdf-mode .footer-shell {
+  color: var(--text);
+}
+
+html.pdf-mode .footer-shell .section-kicker,
+body.pdf-mode .footer-shell .section-kicker,
+html.pdf-mode .footer-shell .body-copy,
+body.pdf-mode .footer-shell .body-copy,
+html.pdf-mode .footer-shell .mini-label,
+body.pdf-mode .footer-shell .mini-label {
+  color: var(--text-secondary);
+}
+
 html.pdf-mode .pdf-hero,
 body.pdf-mode .pdf-hero {
   grid-template-columns: 1fr;

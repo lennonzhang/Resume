@@ -80,10 +80,19 @@ highlights: [
 
 ## View modes
 
-- Web mode: `/`
-- English: `/?lang=en`
-- PDF/print-friendly mode: `/?mode=pdf`
-- English PDF mode: `/?lang=en&mode=pdf`
+Static routes are generated for all language and PDF variants:
+
+- Chinese web: `/`
+- English web: `/en/`
+- Chinese PDF mode: `/pdf/`
+- English PDF mode: `/en/pdf/`
+
+On GitHub Pages, these routes are automatically served under your repository base path, for example:
+
+- `/Resume/`
+- `/Resume/en/`
+- `/Resume/pdf/`
+- `/Resume/en/pdf/`
 
 ## Deploy
 

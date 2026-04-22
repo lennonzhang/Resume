@@ -1,0 +1,338 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from './Section.astro';
+import HighlightCard from './HighlightCard.astro';
+import ExperienceCard from './ExperienceCard.astro';
+import ProjectCard from './ProjectCard.astro';
+import SkillGroupCard from './SkillGroupCard.astro';
+import EducationCard from './EducationCard.astro';
+import { getList, getText, labels, resumeData, type Locale } from '../data/resume';
+
+interface Props {
+  locale: Locale;
+  pdfMode?: boolean;
+  switchHref: string;
+  pdfHref: string;
+  webHref: string;
+}
+
+const { locale, pdfMode = false, switchHref, pdfHref, webHref } = Astro.props;
+const copy = labels[locale];
+const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
+---
+
+<BaseLayout locale={locale} pdfMode={pdfMode} switchHref={switchHref} alternateLocale={alternateLocale}>
+  <section id="top" class:list={{ 'mb-8 grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_360px]': !pdfMode, 'mb-6': pdfMode, 'pdf-hero': pdfMode }}>
+    <div class="hero-panel section-shell rounded-[42px] px-6 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+      <div class="mb-8 flex flex-wrap items-center gap-3">
+        <span class="eyebrow-chip">{copy.basedIn} {resumeData.profile.location}</span>
+        <span class="eyebrow-chip">{copy.available}</span>
+        <span class:list={{ 'eyebrow-chip': true, hidden: !pdfMode }}>{copy.phone} {resumeData.profile.phone}</span>
+      </div>
+
+      <div class:list={{ 'grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_220px] lg:items-end': !pdfMode, 'grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start': pdfMode, 'pdf-hero-main': pdfMode }}>
+        <div>
+          <p class="mini-label mb-4">Product Manager Resume</p>
+          <h1 class="display-title gradient-text max-w-4xl text-5xl sm:text-6xl lg:text-[6.8rem]">
+            {resumeData.profile.name}
+          </h1>
+          <p class="mt-5 max-w-3xl text-lg font-semibold tracking-[-0.03em] text-[var(--text)] sm:text-2xl">
+            {getText(resumeData.profile.role, locale)}
+          </p>
+          <div class="editorial-rule my-7 max-w-2xl"></div>
+          <p class="body-copy max-w-3xl text-base sm:text-lg">
+            {getText(resumeData.profile.tagline, locale)}
+          </p>
+        </div>
+
+        <div class="profile-card rounded-[28px] p-5 sm:p-6">
+          <p class="mini-label mb-3">Contact</p>
+          <p class="mini-label mb-2">Email</p>
+          <a href={`mailto:${resumeData.profile.email}`} class="mb-4 block text-base font-semibold text-[var(--accent-strong)]">
+            {resumeData.profile.email}
+          </a>
+          <p class="mini-label mb-2">{copy.phone}</p>
+          <p class="mb-4 text-base font-semibold text-[var(--text)]">{resumeData.profile.phone}</p>
+          <p class="mini-label mb-2">{copy.basedIn}</p>
+          <p class="mb-5 text-sm text-[var(--text-secondary)]">{resumeData.profile.location}</p>
+          <div class:list={{ 'editorial-rule mb-5': !pdfMode, hidden: pdfMode }}></div>
+          <div class="flex flex-wrap gap-2">
+            {resumeData.links.map((link) => (
+              <a href={link.href} target="_blank" rel="noreferrer" class="tag rounded-full px-3 py-2 text-sm text-[var(--text)] transition hover:bg-white">
+                {getText(link.label, locale)}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class:list={{ 'hero-meta-grid mt-10': !pdfMode, hidden: pdfMode }}>
+        <div class="meta-card">
+          <p class="mini-label mb-2">Focus</p>
+          <p class="body-copy text-sm">
+            {locale === 'zh'
+              ? 'AI 产品 / 增长策略 / 用户研究 / 0 到 1 探索'
+              : 'AI product / growth strategy / user research / 0-to-1 product work'}
+          </p>
+        </div>
+        <div class="meta-card">
+          <p class="mini-label mb-2">Method</p>
+          <p class="body-copy text-sm">
+            {locale === 'zh'
+              ? '强调问题定义、快速验证、跨团队协同和可量化结果。'
+              : 'Grounded in problem framing, fast validation, cross-functional execution, and measurable outcomes.'}
+          </p>
+        </div>
+      </div>
+
+      <div class:list={{ 'mt-8 flex flex-wrap gap-3': true, hidden: pdfMode }}>
+        <a href={`mailto:${resumeData.profile.email}`} class="primary-button rounded-full px-5 py-3 text-sm font-semibold text-white">{copy.email}</a>
+        <a href="#projects" class="outline-button rounded-full px-5 py-3 text-sm font-semibold text-[var(--text)]">{copy.projects}</a>
+        <a href="#experience" class="outline-button rounded-full px-5 py-3 text-sm font-semibold text-[var(--text)]">{copy.experience}</a>
+        <a href={pdfMode ? webHref : pdfHref} class="outline-button rounded-full px-5 py-3 text-sm font-semibold text-[var(--text)]">
+          {pdfMode ? 'Web Mode' : 'PDF Mode'}
+        </a>
+      </div>
+    </div>
+
+    <aside class:list={{ 'section-shell rounded-[42px] px-6 py-7 sm:px-7 lg:pt-8': true, hidden: pdfMode }}>
+      <p class="mini-label mb-4">Resume Notes</p>
+      <h2 class="feature-title text-4xl tracking-[-0.07em] text-[var(--text)] sm:text-5xl">
+        {locale === 'zh' ? '把成果讲得像作品，而不是流水账。' : 'Tell impact like a body of work, not a list of duties.'}
+      </h2>
+      <p class="body-copy mt-5 text-sm">
+        {locale === 'zh'
+          ? '这个模板适合 PM、增长、策略、AI 产品方向。结构上优先展示问题、动作与结果，也保留双语切换与静态部署的灵活性。'
+          : 'This template is designed for PM, growth, strategy, and AI product roles. It emphasizes problem framing, action, and measurable outcomes while staying lightweight and bilingual.'}
+      </p>
+      <div class="editorial-rule my-6"></div>
+      <div class="space-y-5">
+        <div>
+          <p class="mini-label mb-2">Mode</p>
+          <p class="body-copy text-sm">
+            {locale === 'zh'
+              ? '网页模式适合展示，PDF 模式会自动收敛视觉、压缩布局，更适合截图或打印。'
+              : 'Web mode is presentation-first, while PDF mode tightens spacing and reduces decoration for screenshots or print.'}
+          </p>
+        </div>
+        <div>
+          <p class="mini-label mb-2">Editing</p>
+          <p class="body-copy text-sm">
+            {locale === 'zh'
+              ? '所有内容都集中在 src/data/resume.ts，改名字、项目、经历、链接都只需要改这一处。'
+              : 'All editable content lives in src/data/resume.ts, including your name, links, highlights, experience, and projects.'}
+          </p>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="mb-8 grid gap-5 md:grid-cols-3">
+    {resumeData.highlights.map((highlight) => (
+      <HighlightCard
+        value={highlight.value}
+        label={getText(highlight.label, locale)}
+        detail={getText(highlight.detail, locale)}
+      />
+    ))}
+  </div>
+
+  <div class="space-y-8">
+    <Section
+      id="about"
+      eyebrow="Profile"
+      indexLabel="01"
+      title={copy.about}
+      subtitle={locale === 'zh' ? '用一段正式摘要和两块辅助信息，让读者快速理解你的背景、侧重点和工作风格。' : 'Use one formal summary and two supporting blocks so readers can quickly understand your background, priorities, and working style.'}
+    >
+      <div class:list={{ 'grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]': !pdfMode, 'space-y-4': pdfMode }}>
+        <div class="profile-card rounded-[30px] p-6 sm:p-8">
+          <p class="mini-label mb-4">Summary</p>
+          <div class="space-y-4 text-[var(--text)]">
+            <p class="text-base leading-8 sm:text-lg">{getText(resumeData.profile.summary, locale)}</p>
+            <div class="editorial-rule"></div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <p class="mini-label mb-2">{locale === 'zh' ? '擅长方向' : 'Focus Areas'}</p>
+                <p class="body-copy text-sm">
+                  {locale === 'zh'
+                    ? 'AI 产品、增长策略、用户研究、体验优化，以及从 0 到 1 的产品探索。'
+                    : 'AI product, growth strategy, user research, experience optimization, and 0-to-1 product exploration.'}
+                </p>
+              </div>
+              <div>
+                <p class="mini-label mb-2">{locale === 'zh' ? '工作方式' : 'How I Work'}</p>
+                <p class="body-copy text-sm">
+                  {locale === 'zh'
+                    ? '先定义问题与目标，再通过原型、实验和数据验证推进决策，并与跨团队一起把方案落到结果。'
+                    : 'I start by framing the problem and defining the goal, then use prototypes, experiments, and data to guide decisions and turn plans into shipped outcomes with cross-functional teams.'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class:list={{ 'profile-card rounded-[30px] p-6 sm:p-8': true, hidden: pdfMode }}>
+          <p class="mini-label mb-4">Quick Facts</p>
+          <div class="space-y-4 text-sm text-[var(--text)]">
+            <div>
+              <p class="mini-label mb-1">{copy.basedIn}</p>
+              <p>{resumeData.profile.location}</p>
+            </div>
+            <div>
+              <p class="mini-label mb-1">{copy.available}</p>
+              <p>{getText(resumeData.profile.availability, locale)}</p>
+            </div>
+            <div>
+              <p class="mini-label mb-1">{locale === 'zh' ? '内容编辑' : 'Editing'}</p>
+              <p class="body-copy text-sm">
+                {locale === 'zh'
+                  ? '所有内容都集中在 src/data/resume.ts。'
+                  : 'All editable content is centralized in src/data/resume.ts.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <Section
+      id="experience"
+      eyebrow="Career"
+      indexLabel="02"
+      title={copy.experience}
+      subtitle={locale === 'zh' ? '用时间线保留结构感，但重点放在你推动了什么、改变了什么。' : 'Keep the clarity of a timeline, but center the story on what you changed and shipped.'}
+    >
+      <div class="space-y-5">
+        {resumeData.experiences.map((experience) => (
+          <ExperienceCard
+            company={experience.company}
+            role={getText(experience.role, locale)}
+            period={experience.period}
+            location={getText(experience.location, locale)}
+            summary={getText(experience.summary, locale)}
+            bullets={getList(experience.bullets, locale)}
+          />
+        ))}
+      </div>
+    </Section>
+
+    <Section
+      id="projects"
+      eyebrow="Case Studies"
+      indexLabel="03"
+      title={copy.projects}
+      subtitle={locale === 'zh' ? '对于 PM 来说，最有说服力的内容往往不是“做过什么”，而是“为什么做、怎么做、结果如何”。' : 'For PMs, the most persuasive stories are not what you touched, but why it mattered, how you executed, and what changed.'}
+    >
+      <div class="grid gap-5 lg:grid-cols-2">
+        {resumeData.projects.map((project) => (
+          <ProjectCard
+            name={getText(project.name, locale)}
+            role={getText(project.role, locale)}
+            period={project.period}
+            context={getText(project.context, locale)}
+            actions={getList(project.actions, locale)}
+            outcome={getText(project.outcome, locale)}
+            tags={project.tags}
+          />
+        ))}
+      </div>
+    </Section>
+
+    <Section
+      id="skills"
+      eyebrow="Toolkit"
+      indexLabel="04"
+      title={copy.skills}
+      subtitle={locale === 'zh' ? '把能力按工作方法组织起来，比单纯堆工具更有说服力。' : 'Organizing skills around how you work is more credible than dropping a flat list of tools.'}
+    >
+      <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        {resumeData.skills.map((group) => (
+          <SkillGroupCard title={getText(group.title, locale)} items={group.items} />
+        ))}
+      </div>
+    </Section>
+
+    <Section id="education" eyebrow="Background" indexLabel="05" title={copy.education}>
+      <div class="grid gap-5">
+        {resumeData.education.map((item) => (
+          <EducationCard
+            school={item.school}
+            degree={getText(item.degree, locale)}
+            period={item.period}
+            location={item.location}
+            detail={getText(item.detail, locale)}
+          />
+        ))}
+      </div>
+    </Section>
+  </div>
+
+  <footer id="contact" class="footer-shell section-shell mt-8 rounded-[42px] px-6 py-8 sm:px-8 sm:py-10 lg:px-12">
+    {pdfMode ? (
+      <div class="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:items-start">
+        <div>
+          <p class="section-kicker">{copy.contact}</p>
+          <p class="body-copy text-sm">
+            {locale === 'zh' ? '适合整页截图或打印的简洁联系信息。' : 'Compact contact details for full-page screenshots or print.'}
+          </p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p class="mini-label mb-2">Email</p>
+            <a href={`mailto:${resumeData.profile.email}`} class="text-sm font-semibold text-[var(--text)]">
+              {resumeData.profile.email}
+            </a>
+          </div>
+          <div>
+            <p class="mini-label mb-2">{copy.phone}</p>
+            <p class="text-sm text-[var(--text)]">{resumeData.profile.phone}</p>
+          </div>
+          <div>
+            <p class="mini-label mb-2">{copy.basedIn}</p>
+            <p class="text-sm text-[var(--text)]">{resumeData.profile.location}</p>
+          </div>
+          <div>
+            <p class="mini-label mb-2">Links</p>
+            <div class="flex flex-wrap gap-2">
+              {resumeData.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noreferrer" class="text-sm text-[var(--text-secondary)] underline decoration-[rgba(18,24,21,0.18)] underline-offset-4">
+                  {getText(link.label, locale)}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_320px] lg:items-end">
+        <div>
+          <p class="section-kicker">{copy.contact}</p>
+          <h2 class:list={{
+            'display-title max-w-4xl text-4xl sm:text-5xl lg:text-6xl': true,
+            'text-white': !pdfMode,
+            'text-[var(--text)]': pdfMode
+          }}>
+            {getText(resumeData.profile.tagline, locale)}
+          </h2>
+          <p class:list={{
+            'body-copy mt-5 max-w-2xl text-sm': true,
+            'text-white/70': !pdfMode
+          }}>
+            {locale === 'zh'
+              ? '如果你准备把这个模板换成自己的真实简历，优先修改 src/data/resume.ts 里的 profile、highlights、experiences、projects 和 links。'
+              : 'To turn this template into your real resume, start by editing profile, highlights, experiences, projects, and links in src/data/resume.ts.'}
+          </p>
+        </div>
+        <div class="space-y-4">
+          <a href={`mailto:${resumeData.profile.email}`} class="outline-button inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white">
+            {resumeData.profile.email}
+          </a>
+          <p class="text-sm text-white/75">{resumeData.profile.phone}</p>
+          <p class="text-sm text-white/60">© {new Date().getFullYear()} {resumeData.profile.name}</p>
+        </div>
+      </div>
+    )}
+  </footer>
+
+
+</BaseLayout>
