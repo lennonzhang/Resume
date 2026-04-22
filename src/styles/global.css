@@ -366,7 +366,14 @@ body.pdf-mode .gradient-text {
 
 html.pdf-mode .display-title,
 body.pdf-mode .display-title {
-  font-size: clamp(3.4rem, 5vw, 5.2rem);
+  font-size: clamp(3rem, 4.2vw, 4.4rem);
+}
+
+html.pdf-mode .section-title,
+body.pdf-mode .section-title,
+html.pdf-mode .feature-title,
+body.pdf-mode .feature-title {
+  letter-spacing: -0.04em;
 }
 
 html.pdf-mode .section-index,
@@ -397,12 +404,12 @@ body.pdf-mode .pdf-hero {
 
 html.pdf-mode .pdf-hero-main,
 body.pdf-mode .pdf-hero-main {
-  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-columns: minmax(0, 1fr) 240px;
 }
 
 html.pdf-mode .body-copy,
 body.pdf-mode .body-copy {
-  line-height: 1.72;
+  line-height: 1.66;
 }
 
 html.pdf-mode .outline-button,
@@ -423,7 +430,7 @@ body.pdf-mode .nav-pill {
 
 html.pdf-mode .hero-panel,
 body.pdf-mode .hero-panel {
-  padding: 2rem 2rem 1.5rem !important;
+  padding: 1.5rem 1.5rem 1.25rem !important;
 }
 
 html.pdf-mode .profile-card,
@@ -445,12 +452,22 @@ body.pdf-mode .stat-card {
 
 html.pdf-mode .stat-card,
 body.pdf-mode .stat-card {
-  padding: 1.25rem;
+  padding: 1rem;
 }
 
 html.pdf-mode .value-display,
 body.pdf-mode .value-display {
-  font-size: 2.2rem;
+  font-size: 1.9rem;
+}
+
+html.pdf-mode .timeline-card,
+body.pdf-mode .timeline-card {
+  gap: 1rem;
+}
+
+html.pdf-mode .section-shell,
+body.pdf-mode .section-shell {
+  border-width: 1px;
 }
 
 html.pdf-mode .case-outcome,

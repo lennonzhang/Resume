@@ -30,7 +30,7 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
         <span class:list={{ 'eyebrow-chip': true, hidden: !pdfMode }}>{copy.phone} {resumeData.profile.phone}</span>
       </div>
 
-      <div class:list={{ 'grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_220px] lg:items-end': !pdfMode, 'grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start': pdfMode, 'pdf-hero-main': pdfMode }}>
+      <div class:list={{ 'grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_220px] lg:items-end': !pdfMode, 'grid gap-5 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start': pdfMode, 'pdf-hero-main': pdfMode }}>
         <div>
           <p class="mini-label mb-4">Product Manager Resume</p>
           <h1 class="display-title gradient-text max-w-4xl text-5xl sm:text-6xl lg:text-[6.8rem]">
@@ -39,8 +39,8 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
           <p class="mt-5 max-w-3xl text-lg font-semibold tracking-[-0.03em] text-[var(--text)] sm:text-2xl">
             {getText(resumeData.profile.role, locale)}
           </p>
-          <div class="editorial-rule my-7 max-w-2xl"></div>
-          <p class="body-copy max-w-3xl text-base sm:text-lg">
+          <div class:list={{ 'editorial-rule my-7 max-w-2xl': !pdfMode, 'my-5 max-w-xl editorial-rule': pdfMode }}></div>
+          <p class:list={{ 'body-copy max-w-3xl text-base sm:text-lg': true, 'text-sm sm:text-base': pdfMode }}>
             {getText(resumeData.profile.tagline, locale)}
           </p>
         </div>
@@ -143,15 +143,15 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
       eyebrow="Profile"
       indexLabel="01"
       title={copy.about}
-      subtitle={locale === 'zh' ? '用一段正式摘要和两块辅助信息，让读者快速理解你的背景、侧重点和工作风格。' : 'Use one formal summary and two supporting blocks so readers can quickly understand your background, priorities, and working style.'}
+      subtitle={pdfMode ? undefined : locale === 'zh' ? '用一段正式摘要和两块辅助信息，让读者快速理解你的背景、侧重点和工作风格。' : 'Use one formal summary and two supporting blocks so readers can quickly understand your background, priorities, and working style.'}
     >
       <div class:list={{ 'grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]': !pdfMode, 'space-y-4': pdfMode }}>
         <div class="profile-card rounded-[30px] p-6 sm:p-8">
           <p class="mini-label mb-4">Summary</p>
           <div class="space-y-4 text-[var(--text)]">
-            <p class="text-base leading-8 sm:text-lg">{getText(resumeData.profile.summary, locale)}</p>
-            <div class="editorial-rule"></div>
-            <div class="grid gap-4 sm:grid-cols-2">
+            <p class:list={{ 'text-base leading-8 sm:text-lg': true, 'text-sm leading-7 sm:text-base': pdfMode }}>{getText(resumeData.profile.summary, locale)}</p>
+            <div class:list={{ 'editorial-rule': true, hidden: pdfMode }}></div>
+            <div class:list={{ 'grid gap-4 sm:grid-cols-2': true, hidden: pdfMode }}>
               <div>
                 <p class="mini-label mb-2">{locale === 'zh' ? '擅长方向' : 'Focus Areas'}</p>
                 <p class="body-copy text-sm">
@@ -200,7 +200,7 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
       eyebrow="Career"
       indexLabel="02"
       title={copy.experience}
-      subtitle={locale === 'zh' ? '用时间线保留结构感，但重点放在你推动了什么、改变了什么。' : 'Keep the clarity of a timeline, but center the story on what you changed and shipped.'}
+      subtitle={pdfMode ? undefined : locale === 'zh' ? '用时间线保留结构感，但重点放在你推动了什么、改变了什么。' : 'Keep the clarity of a timeline, but center the story on what you changed and shipped.'}
     >
       <div class="space-y-5">
         {resumeData.experiences.map((experience) => (
@@ -221,7 +221,7 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
       eyebrow="Case Studies"
       indexLabel="03"
       title={copy.projects}
-      subtitle={locale === 'zh' ? '对于 PM 来说，最有说服力的内容往往不是“做过什么”，而是“为什么做、怎么做、结果如何”。' : 'For PMs, the most persuasive stories are not what you touched, but why it mattered, how you executed, and what changed.'}
+      subtitle={pdfMode ? undefined : locale === 'zh' ? '对于 PM 来说，最有说服力的内容往往不是“做过什么”，而是“为什么做、怎么做、结果如何”。' : 'For PMs, the most persuasive stories are not what you touched, but why it mattered, how you executed, and what changed.'}
     >
       <div class="grid gap-5 lg:grid-cols-2">
         {resumeData.projects.map((project) => (
@@ -243,7 +243,7 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
       eyebrow="Toolkit"
       indexLabel="04"
       title={copy.skills}
-      subtitle={locale === 'zh' ? '把能力按工作方法组织起来，比单纯堆工具更有说服力。' : 'Organizing skills around how you work is more credible than dropping a flat list of tools.'}
+      subtitle={pdfMode ? undefined : locale === 'zh' ? '把能力按工作方法组织起来，比单纯堆工具更有说服力。' : 'Organizing skills around how you work is more credible than dropping a flat list of tools.'}
     >
       <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {resumeData.skills.map((group) => (
@@ -269,37 +269,32 @@ const alternateLocale: Locale = locale === 'zh' ? 'en' : 'zh';
 
   <footer id="contact" class="footer-shell section-shell mt-8 rounded-[42px] px-6 py-8 sm:px-8 sm:py-10 lg:px-12">
     {pdfMode ? (
-      <div class="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:items-start">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-start">
         <div>
-          <p class="section-kicker">{copy.contact}</p>
-          <p class="body-copy text-sm">
-            {locale === 'zh' ? '适合整页截图或打印的简洁联系信息。' : 'Compact contact details for full-page screenshots or print.'}
-          </p>
+          <p class="mini-label mb-2">Email</p>
+          <a href={`mailto:${resumeData.profile.email}`} class="text-sm font-semibold text-[var(--text)]">
+            {resumeData.profile.email}
+          </a>
         </div>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <p class="mini-label mb-2">Email</p>
-            <a href={`mailto:${resumeData.profile.email}`} class="text-sm font-semibold text-[var(--text)]">
-              {resumeData.profile.email}
-            </a>
-          </div>
-          <div>
-            <p class="mini-label mb-2">{copy.phone}</p>
-            <p class="text-sm text-[var(--text)]">{resumeData.profile.phone}</p>
-          </div>
-          <div>
-            <p class="mini-label mb-2">{copy.basedIn}</p>
-            <p class="text-sm text-[var(--text)]">{resumeData.profile.location}</p>
-          </div>
-          <div>
-            <p class="mini-label mb-2">Links</p>
-            <div class="flex flex-wrap gap-2">
-              {resumeData.links.map((link) => (
+        <div>
+          <p class="mini-label mb-2">{copy.phone}</p>
+          <p class="text-sm text-[var(--text)]">{resumeData.profile.phone}</p>
+        </div>
+        <div>
+          <p class="mini-label mb-2">{copy.basedIn}</p>
+          <p class="text-sm text-[var(--text)]">{resumeData.profile.location}</p>
+        </div>
+        <div>
+          <p class="mini-label mb-2">Links</p>
+          <div class="flex flex-wrap gap-2">
+            {resumeData.links.map((link, index) => (
+              <>
+                {index > 0 && <span class="text-sm text-[var(--text-secondary)]">/</span>}
                 <a href={link.href} target="_blank" rel="noreferrer" class="text-sm text-[var(--text-secondary)] underline decoration-[rgba(18,24,21,0.18)] underline-offset-4">
                   {getText(link.label, locale)}
                 </a>
-              ))}
-            </div>
+              </>
+            ))}
           </div>
         </div>
       </div>
